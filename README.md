@@ -45,10 +45,10 @@ import pandas as pd
 import numpy as np
 from scipy.stats import ttest_ind
 
-# 取最新信号
+1) 取最新信号
 signal = momentum.iloc[-1]
 
-# 分组
+2) 分组
 top_quantile = 0.2
 bottom_quantile = 0.2
 n_top = int(top_quantile * len(signal))
@@ -57,14 +57,14 @@ n_bottom = int(bottom_quantile * len(signal))
 top_group = signal.nlargest(n_top).index
 bottom_group = signal.nsmallest(n_bottom).index
 
-# 未来 20 天收益
+3) 未来 20 天收益
 future_returns = prices.pct_change(20).iloc[-20:]
 
-# 计算每组平均未来收益
+4) 计算每组平均未来收益
 top_returns = future_returns[top_group].mean(axis=1)
 bottom_returns = future_returns[bottom_group].mean(axis=1)
 
-# t-test
+5) t-test
 t_stat, p_value = ttest_ind(top_returns, bottom_returns)
 print(f"t-statistic: {t_stat:.3f}, p-value: {p_value:.3f}")
 
